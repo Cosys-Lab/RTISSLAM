@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>rtisslam_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch files and parameters: RTISSLAM in simulation and on the Pioneer with an eRTIS (and a lidar for ground truth).</description>
+  <maintainer email="jan.steckel@uantwerpen.be">Jan Steckel</maintainer>
+  <license>BSD-3-Clause</license>
+  <exec_depend>rtisslam_ros</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

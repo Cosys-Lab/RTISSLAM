@@ -1,0 +1,70 @@
+# slam_toolbox (sync mode) on the sonar pseudo-scan, for the grid-SLAM baseline (scripts/baseline_slam_toolbox.py).
+# Starting point: slam_toolbox's mapper_params_online_sync.yaml (Jazzy 2.8.5); the values marked "sonar" are
+# adapted to the eRTIS pseudo-scan (181 beams over +-90 deg, max range 4.5 m, ~50 % of the beams with a return).
+# "tuned": chosen on the development drive office_map only (1 lap; 38 configurations, 2026-10-13): with the defaults
+# Karto's scan matching corrupts the heading on the sparse sonar scans (ATE 18 m vs 4.6 m for odometry); trusting
+# the odometry more (variance penalties and their floors), denser vertices and looser loop closure give 0.43 m.
+# The landscape is rough (neighbouring configurations 1.3-6 m); evaluation drives are never used for tuning.
+slam_toolbox:
+  ros__parameters:
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+    use_map_saver: false
+    mode: mapping
+
+    debug_logging: false
+    throttle_scans: 1
+    transform_publish_period: 0.02
+    map_update_interval: 2.0
+    resolution: 0.05
+    min_laser_range: 0.0
+    max_laser_range: 4.5                  # sonar
+    minimum_time_interval: 0.0            # replay: every scan may be used (travel decides)
+    transform_timeout: 0.2
+    tf_buffer_duration: 3000.0            # replay: the whole drive
+    stack_size_to_use: 40000000
+    enable_interactive_mode: true         # publishes the pose graph (vertices) on slam_toolbox/graph_visualization
+
+    use_scan_matching: true
+    use_scan_barycenter: true
+    minimum_travel_distance: 0.3                # tuned (sonar)
+    minimum_travel_heading: 0.3                # tuned (sonar)
+    check_min_dist_and_heading_precisely: false
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1
+    link_scan_maximum_distance: 1.5
+    loop_search_maximum_distance: 5.0                # tuned (sonar)
+    do_loop_closing: true
+    loop_match_minimum_chain_size: 5                # tuned (sonar)
+    loop_match_maximum_variance_coarse: 3.0
+    loop_match_minimum_response_coarse: 0.25                # tuned (sonar)
+    loop_match_minimum_response_fine: 0.35                # tuned (sonar)
+
+    correlation_search_space_dimension: 0.5
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.1
+
+    loop_search_space_dimension: 8.0
+    loop_search_space_resolution: 0.05
+    loop_search_space_smear_deviation: 0.03
+
+    distance_variance_penalty: 0.02                # tuned (sonar)
+    angle_variance_penalty: 0.02                # tuned (sonar)
+    fine_search_angle_offset: 0.00349
+    coarse_search_angle_offset: 0.349
+    coarse_angle_resolution: 0.0349
+    minimum_angle_penalty: 0.2                # tuned (sonar)
+    minimum_distance_penalty: 0.05                # tuned (sonar)
+    use_response_expansion: true
+    min_pass_through: 2
+    occupancy_threshold: 0.1

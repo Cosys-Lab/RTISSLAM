@@ -1,0 +1,29 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+build/
+install/
+log/
+*.egg-info/
+*.pt
+*.onnx
+*.npz
+*.npy
+*.mat
+*.db3
+*.mcap
+*.bag
+*.mp4
+runs/
+data/raw/
+*conflicted copy*
+
+# videos (large, not in git)
+results/*.mp4
+
+# demo data (not in git)
+data/demo/
+
+# demo-data bundle (not in git)
+dist/

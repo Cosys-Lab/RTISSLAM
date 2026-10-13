@@ -1,0 +1,15 @@
+# Python dependencies of RTISSLAM (simulator, SLAM, localization, navigation, scripts).
+# ROS 2 Jazzy (rclpy, Nav2, slam_toolbox, RViz2) comes from apt, not pip: see README.md.
+# Tested with Python 3.12 (Ubuntu 24.04); install torch with CUDA for real-time simulation and DMAS3-CF imaging
+# (https://pytorch.org/get-started/locally/).
+numpy>=1.26
+scipy>=1.11
+torch>=2.4
+gtsam>=4.2,<4.3
+matplotlib>=3.6
+pyyaml>=6.0
+imageio>=2.30
+imageio-ffmpeg>=0.5
+pytest>=7.4
+# optional: figures from PDF pages in the video scripts
+# pymupdf>=1.24
